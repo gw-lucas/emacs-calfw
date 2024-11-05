@@ -2644,6 +2644,8 @@ Movement is forward if NUM is negative."
 
 (defvar cfw:details-buffer-name "*cfw:details*" "[internal]")
 (defvar cfw:details-window-size 20 "Default detail buffer window size.")
+(defvar cfw:before-win-num 0)
+(defvar cfw:main-buf nil)
 
 (defun cfw:details-popup (text)
   "Popup the buffer to show details.
@@ -2656,10 +2658,12 @@ TEXT is a content to show."
       (setq buf (get-buffer-create cfw:details-buffer-name))
       (with-current-buffer buf
         (cfw:details-mode)
-        (set (make-local-variable 'cfw:before-win-num) before-win-num)))
+        ;; (set (make-local-variable 'cfw:before-win-num) before-win-num))) ;; cfw:before-win-num should be defvar'd, see above
+        (set cfw:before-win-num before-win-num)))
     (with-current-buffer buf
       (let (buffer-read-only)
-        (set (make-local-variable 'cfw:main-buf) main-buf)
+        ;; (set (make-local-variable 'cfw:main-buf) main-buf) ;; cfw:main-buf should be defvar'd, see above
+        (set cfw:main-buf main-buf)
         (erase-buffer)
         (insert text)
         (goto-char (point-min))))
